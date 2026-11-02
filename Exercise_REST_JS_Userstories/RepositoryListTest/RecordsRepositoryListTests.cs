@@ -59,4 +59,86 @@ public class RecordsRepositoryListTests
         Assert.Equal("New Record", fetchedRecords[0].Title);
         Assert.Equal(beforeCount + 1, afterCount);
     }
+    [Fact]
+    public void TestAddRecordNull()
+    {
+        // Arrange
+        RecordsRepositoryList repository = new RecordsRepositoryList();
+        // Act + Assert
+        Assert.Throws<ArgumentNullException>(() => repository.AddRecord(null!));
+    }
+    [Fact]
+    public void TestGetRecord()
+    {
+        //Arrange
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true);
+        // Act
+        Record? existingRecord = repository.GetRecord(1);
+        // Assert
+        Assert.NotNull(existingRecord);
+        Assert.Equal(1, existingRecord!.Id);
+    } 
+    [Fact]
+    public void TestGetRecordNonExisting()
+    {
+        // Arrange
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true);
+        // Act
+        Record? nonExistingRecord = repository.GetRecord(-1);
+        // Assert
+        Assert.Null(nonExistingRecord);
+    }
+    [Fact]
+    public void TestUpdateRecord()
+    {
+        // Arrange
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true);
+        Record updatedRecord = new Record { Title = "Updated Title", Artist = "Updated Artist", Duration = 250, PublicationYear = 2025 };
+        // Act
+        Record? result = repository.UpdateRecord(1, updatedRecord);
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal("Updated Title", result!.Title);
+        Assert.Equal("Updated Artist", result.Artist);
+    }
+    [Fact]
+    public void TestUpdateRecordNull()
+    {
+        // Arrange
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true);
+        // Act + Assert
+        Assert.Throws<ArgumentNullException>(() => repository.UpdateRecord(1, null!));
+    }
+    [Fact]
+    public void TestUpdateRecordNonExisting()
+    {
+        //Arrange
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true);
+        Record updatedRecord = new Record { Title = "Updated Title", Artist = "Updated Artist", Duration = 250, PublicationYear = 2025 };
+        // Act
+        Record? result = repository.UpdateRecord(-1, updatedRecord);
+        // Assert
+        Assert.Null(result);
+    }
+    [Fact]  
+    public void TestDeleteRecord()
+    {
+        // Arrange
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true);
+        // Act
+        Record? deletedRecord = repository.DeleteRecord(1);
+        // Assert
+        Assert.NotNull(deletedRecord);
+        Assert.Null(repository.GetRecord(1));
+    }
+    [Fact]
+    public void TestDeleteRecordNonExisting()
+    {
+        // Arrange
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true);
+        // Act
+        Record? deletedRecord = repository.DeleteRecord(-1);
+        // Assert
+        Assert.Null(deletedRecord);
+    }
 }
