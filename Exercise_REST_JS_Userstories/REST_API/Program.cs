@@ -14,7 +14,7 @@ public class Program
         builder.Services.AddOpenApi();
 
         #region Dependency Injection
-        builder.Services.AddSingleton<IRecordsRepository>(new RecordsRepositoryList());
+        builder.Services.AddSingleton<IRecordsRepository>(new RecordsRepositoryList(initializeWithSampleData: true));
         #endregion
 
         var app = builder.Build();
