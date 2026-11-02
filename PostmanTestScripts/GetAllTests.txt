@@ -1,0 +1,12 @@
+pm.test("TestGetAll", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.length).to.eql(4);
+});
+
+pm.test("Status code is 200 or 204", function () {
+    pm.response.to.have.status(200 || 204);
+});
+
+pm.test("Response time is less than 200ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(200);
+});
