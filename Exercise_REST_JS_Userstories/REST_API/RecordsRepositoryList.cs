@@ -4,6 +4,7 @@
     {
         private readonly List<Record> _records = new List<Record>();
         private int _nextId = 1;
+        public int Count { get { return _records.Count; } }
         public RecordsRepositoryList(bool initializeWithSampleData = false)
         {
             if (initializeWithSampleData)
@@ -52,7 +53,13 @@
         }
         public Record? DeleteRecord(int id)
         {
-            throw new NotImplementedException();
+            Record? existingRecord = GetRecord(id);
+            if(existingRecord == null)
+            {
+                return null;
+            }
+            _records.Remove(existingRecord);
+            return existingRecord;
         }
     }
 }
