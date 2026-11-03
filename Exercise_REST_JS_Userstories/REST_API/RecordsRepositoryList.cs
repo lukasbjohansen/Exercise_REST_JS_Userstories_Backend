@@ -12,10 +12,10 @@
                 switch(sampleDataSet)
                 {
                     case 1:
-                        _records.Add(new Record { Title = "Abbey Road", Artist = "The Beatles", PublicationYear = 1969, Duration = 47 });
-                        _records.Add(new Record { Title = "Thriller", Artist = "Michael Jackson", PublicationYear = 1982, Duration = 42 });
-                        _records.Add(new Record { Title = "Back in Black", Artist = "AC/DC", PublicationYear = 1980, Duration = 42 });
-                        _records.Add(new Record { Title = "Dark Side of the Moon", Artist = "Pink Floyd", PublicationYear = 1973, Duration = 43 }); 
+                        _records.Add(new Record { Id = _nextId++, Title = "Abbey Road", Artist = "The Beatles", PublicationYear = 1969, Duration = 2820 });
+                        _records.Add(new Record { Id = _nextId++, Title = "Thriller", Artist = "Michael Jackson", PublicationYear = 1982, Duration = 2520 });
+                        _records.Add(new Record { Id = _nextId++, Title = "Back in Black", Artist = "AC/DC", PublicationYear = 1980, Duration = 2520 });
+                        _records.Add(new Record { Id = _nextId++, Title = "Dark Side of the Moon", Artist = "Pink Floyd", PublicationYear = 1973, Duration = 2580 }); 
                         break;
                     default:
                         _records.Add(new Record { Id = _nextId++, Title = "The Flowing Water", Artist = "Michael Jackson", Duration = 180, PublicationYear = 2020 });
@@ -47,12 +47,12 @@
 
             if (!string.IsNullOrEmpty(title))
             {
-                query = query.Where(r => r.Title.Contains(title));
+                query = query.Where(r => r.Title.ToLower().Contains(title.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(artist))
             {
-                query = query.Where(r => r.Artist.Contains(artist));
+                query = query.Where(r => r.Artist.ToLower().Contains(artist.ToLower()));
             }
 
             if (publicationYear.HasValue)

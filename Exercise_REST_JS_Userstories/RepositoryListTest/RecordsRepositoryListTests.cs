@@ -57,8 +57,9 @@ public class RecordsRepositoryListTests
     [Fact]
     public void GetRecords_WithPartialTitle_ReturnsMatchingRecords()
     {
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true, sampleDataSet: 1);
         // Act (testing Contains behavior)
-        var result = CallGetRecords(title: "Road");
+        var result = repository.GetRecords(title: "Road");
 
         // Assert
         Assert.Single(result);
@@ -68,8 +69,9 @@ public class RecordsRepositoryListTests
     [Fact]
     public void GetRecords_WithArtist_ReturnsMatchingRecords()
     {
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true, sampleDataSet: 1);
         // Act
-        var result = CallGetRecords(artist: "Pink Floyd");
+        var result = repository.GetRecords(artist: "Pink Floyd");
 
         // Assert
         Assert.Single(result);
@@ -79,8 +81,9 @@ public class RecordsRepositoryListTests
     [Fact]
     public void GetRecords_WithPublicationYear_ReturnsMatchingRecords()
     {
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true, sampleDataSet: 1);
         // Act
-        var result = CallGetRecords(publicationYear: 1980);
+        var result = repository.GetRecords(publicationYear: 1980);
 
         // Assert
         Assert.Single(result);
@@ -90,8 +93,9 @@ public class RecordsRepositoryListTests
     [Fact]
     public void GetRecords_WithMinDuration_ReturnsFilteredRecords()
     {
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true, sampleDataSet: 1);
         // Act (Duration >= 43: Abbey Road (47), Dark Side of the Moon (43))
-        var result = CallGetRecords(minDuration: 43);
+        var result = repository.GetRecords(minDuration: 43);
 
         // Assert
         Assert.Equal(2, result.Count);
@@ -102,8 +106,9 @@ public class RecordsRepositoryListTests
     [Fact]
     public void GetRecords_WithMaxDuration_ReturnsFilteredRecords()
     {
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true, sampleDataSet: 1);
         // Act (Duration <= 42: Thriller (42), Back in Black (42))
-        var result = CallGetRecords(maxDuration: 42);
+        var result = repository.GetRecords(maxDuration: 42);
 
         // Assert
         Assert.Equal(2, result.Count);
@@ -114,8 +119,9 @@ public class RecordsRepositoryListTests
     [Fact]
     public void GetRecords_WithDurationRange_ReturnsFilteredRecords()
     {
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true, sampleDataSet: 1);
         // Act (Duration between 42 and 45 inclusive: Thriller (42), Back in Black (42), Dark Side (43))
-        var result = CallGetRecords(minDuration: 42, maxDuration: 45);
+        var result = repository.GetRecords(minDuration: 42, maxDuration: 45);
 
         // Assert
         Assert.Equal(3, result.Count);
@@ -125,8 +131,9 @@ public class RecordsRepositoryListTests
     [Fact]
     public void GetRecords_WithMultipleFilters_ReturnsIntersection()
     {
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true, sampleDataSet: 1);
         // Act
-        var result = CallGetRecords(artist: "The Beatles", publicationYear: 1969);
+        var result = repository.GetRecords(artist: "The Beatles", publicationYear: 1969);
 
         // Assert
         Assert.Single(result);
@@ -136,8 +143,9 @@ public class RecordsRepositoryListTests
     [Fact]
     public void GetRecords_WithNoMatches_ReturnsEmptyList()
     {
+        RecordsRepositoryList repository = new RecordsRepositoryList(initializeWithSampleData: true, sampleDataSet: 1);
         // Act
-        var result = CallGetRecords(title: "NonExistentAlbum");
+        var result = repository.GetRecords(title: "NonExistentAlbum");
 
         // Assert
         Assert.Empty(result);
