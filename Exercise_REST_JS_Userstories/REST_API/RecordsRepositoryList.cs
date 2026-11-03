@@ -5,14 +5,25 @@
         private readonly List<Record> _records = new List<Record>();
         private int _nextId = 1;
         public int Count { get { return _records.Count; } }
-        public RecordsRepositoryList(bool initializeWithSampleData = false)
+        public RecordsRepositoryList(bool initializeWithSampleData = false, int sampleDataSet = 0)
         {
             if (initializeWithSampleData)
             {
-                _records.Add(new Record { Id = _nextId++, Title = "The Flowing Water", Artist = "Michael Jackson", Duration = 180, PublicationYear = 2020 });
-                _records.Add(new Record { Id = _nextId++, Title = "The Echoing Hills", Artist = "Addy Wilson", Duration = 200, PublicationYear = 2021 });
-                _records.Add(new Record { Id = _nextId++, Title = "The Whispering Woods", Artist = "Rasperr peter", Duration = 220, PublicationYear = 2022 });
-                _records.Add(new Record { Id = _nextId++, Title = "The Singing Sea", Artist = "Loki Guttenham", Duration = 240, PublicationYear = 2023 });
+                switch(sampleDataSet)
+                {
+                    case 1:
+                        _records.Add(new Record { Title = "Abbey Road", Artist = "The Beatles", PublicationYear = 1969, Duration = 47 });
+                        _records.Add(new Record { Title = "Thriller", Artist = "Michael Jackson", PublicationYear = 1982, Duration = 42 });
+                        _records.Add(new Record { Title = "Back in Black", Artist = "AC/DC", PublicationYear = 1980, Duration = 42 });
+                        _records.Add(new Record { Title = "Dark Side of the Moon", Artist = "Pink Floyd", PublicationYear = 1973, Duration = 43 }); 
+                        break;
+                    default:
+                        _records.Add(new Record { Id = _nextId++, Title = "The Flowing Water", Artist = "Michael Jackson", Duration = 180, PublicationYear = 2020 });
+                        _records.Add(new Record { Id = _nextId++, Title = "The Echoing Hills", Artist = "Addy Wilson", Duration = 200, PublicationYear = 2021 });
+                        _records.Add(new Record { Id = _nextId++, Title = "The Whispering Woods", Artist = "Rasperr peter", Duration = 220, PublicationYear = 2022 });
+                        _records.Add(new Record { Id = _nextId++, Title = "The Singing Sea", Artist = "Loki Guttenham", Duration = 240, PublicationYear = 2023 });
+                        break;
+                }
             }
         }
 
@@ -30,9 +41,36 @@
         //{
         //    return _records.FirstOrDefault(r => r.Id == id);
         //}
-        public List<Record> GetRecords()
+        public List<Record> GetRecords(string? title = null, string? artist = null, int? publicationYear = null, int? minDuration = null, int? maxDuration = null)
         {
-            return _records.ToList();
+            var query = _records.AsQueryable();
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query.Where(r => r.Title.Contains(title));
+            }
+
+            if (!string.IsNullOrEmpty(artist))
+            {
+                query = query.Where(r => r.Artist.Contains(artist));
+            }
+
+            if (publicationYear.HasValue)
+            {
+                query = query.Where(r => r.PublicationYear == publicationYear.Value);
+            }
+
+            if (minDuration.HasValue)
+            {
+                query = query.Where(r => r.Duration >= minDuration.Value);
+            }
+
+            if (maxDuration.HasValue)
+            {
+                query = query.Where(r => r.Duration <= maxDuration.Value);
+            }
+
+            return query.ToList();
         }
         //public Record? UpdateRecord(int id, Record record)
         //{

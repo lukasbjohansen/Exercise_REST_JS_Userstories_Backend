@@ -17,9 +17,9 @@ public class RecordsController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public ActionResult<IEnumerable<Record>> Get()
+    public ActionResult<IEnumerable<Record>> Get([FromQuery] string? title = null, [FromQuery] string? artist = null, [FromQuery] int? publicationYear = null, [FromQuery] int? minDuration = null, [FromQuery] int? maxDuration = null)
     {
-        IEnumerable<Record> records = _recordsRepository.GetRecords();
+        IEnumerable<Record> records = _recordsRepository.GetRecords(title, artist, publicationYear, minDuration, maxDuration);
         if (!records.Any())
         {
             return NoContent();
