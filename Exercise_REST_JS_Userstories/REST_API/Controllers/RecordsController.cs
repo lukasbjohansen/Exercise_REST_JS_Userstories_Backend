@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -6,6 +7,7 @@ namespace REST_API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class RecordsController : ControllerBase
 {
     private IRecordsRepository _recordsRepository;
@@ -45,6 +47,7 @@ public class RecordsController : ControllerBase
     //[HttpPost]
     //[ProducesResponseType(StatusCodes.Status201Created)]
     //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+    //[Authorize(Roles = "Admin")]
     //public ActionResult<Record> Post([FromBody] Record record)
     //{
     //    try
@@ -63,6 +66,7 @@ public class RecordsController : ControllerBase
     //[ProducesResponseType(StatusCodes.Status200OK)]
     //[ProducesResponseType(StatusCodes.Status400BadRequest)]
     //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //[Authorize(Roles = "Admin")]
     //public ActionResult<Record> Put(int id, [FromBody] Record value)
     //{
     //    Record? record = _recordsRepository.GetRecord(id);
@@ -85,6 +89,7 @@ public class RecordsController : ControllerBase
     //[HttpDelete("{id}")]
     //[ProducesResponseType(StatusCodes.Status200OK)]
     //[ProducesResponseType(StatusCodes.Status404NotFound)]
+    //[Authorize(Roles = "Admin")]
     //public ActionResult Delete(int id)
     //{
     //    Record? record = _recordsRepository.GetRecord(id);
